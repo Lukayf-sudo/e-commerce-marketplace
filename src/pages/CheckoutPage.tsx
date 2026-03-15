@@ -119,4 +119,72 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <Lock className="h-4 w-4" />
-                  <span>Your payment information is secure and encrypted
+                  <span>Your payment information is secure and encrypted</span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Order Summary */}
+          <div>
+            <Card className="sticky top-20 border-border">
+              <CardHeader>
+                <CardTitle className="text-foreground">Order Summary</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Cart Items */}
+                <div className="space-y-3 max-h-64 overflow-y-auto">
+                  {items.map((item) => (
+                    <div key={item.id} className="flex gap-3">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-16 h-16 object-cover rounded border border-border"
+                      />
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-foreground">{item.name}</p>
+                        <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
+                      </div>
+                      <p className="text-sm font-semibold text-foreground">
+                        ${(item.price * item.quantity).toFixed(2)}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="border-t border-border pt-4 space-y-2">
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>Subtotal</span>
+                    <span className="text-foreground font-medium">${total.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>Shipping</span>
+                    <span className="text-success font-medium">Free</span>
+                  </div>
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>Tax</span>
+                    <span className="text-foreground font-medium">${(total * 0.1).toFixed(2)}</span>
+                  </div>
+                  <div className="border-t border-border pt-2 flex justify-between">
+                    <span className="text-lg font-bold text-foreground">Total</span>
+                    <span className="text-2xl font-bold text-primary">
+                      ${(total * 1.1).toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
+                  disabled={isProcessing}
+                >
+                  {isProcessing ? 'Processing...' : 'Place Order'}
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+}
